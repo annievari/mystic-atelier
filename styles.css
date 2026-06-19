@@ -8,10 +8,10 @@
   --bg-card:       rgba(255, 255, 255, 0.03);
   --bg-card-hover: rgba(255, 255, 255, 0.055);
 
-  --gold:          #c4a65c;
-  --gold-light:    #d9bc7a;
-  --gold-dim:      rgba(196, 166, 92, 0.18);
-  --gold-border:   rgba(196, 166, 92, 0.28);
+  --gold:          #f1a8c1;
+  --gold-light:    #f7c4d6;
+  --gold-dim:      rgba(241, 168, 193, 0.18);
+  --gold-border:   rgba(241, 168, 193, 0.28);
 
   --text-primary:  #f0ece3;
   --text-secondary:#8a8a9d;
@@ -103,7 +103,7 @@ button { cursor: pointer; }
   justify-content: center;
   gap: 0.5rem;
   padding: 0.875rem 2.25rem;
-  border-radius: 2px;
+  border-radius: 50px;
   font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 400;
