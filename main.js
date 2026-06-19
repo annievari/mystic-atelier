@@ -72,36 +72,57 @@ const sectionObserver = new IntersectionObserver((entries) => {
 sections.forEach(s => sectionObserver.observe(s));
 
 /* ════════════════════════════════════════
-   CONTACT FORM
-   TODO: añade action="https://formspree.io/f/YOUR_ID" al <form>
-         para recibir los mensajes por correo.
+   HERO WORD ROTATION
 ════════════════════════════════════════ */
 
-const contactForm = document.getElementById('contactForm');
-const submitBtn   = document.getElementById('submitBtn');
-const formNote    = document.getElementById('formNote');
+const rotateEl    = document.querySelector('.hero-rotate-word');
+const rotateWords = ['marcas', 'historias', 'identidades', 'experiencias'];
+let wordIndex     = 0;
 
-if (contactForm) {
-  contactForm.addEventListener('submit', e => {
-    e.preventDefault();
+if (rotateEl) {
+  setInterval(() => {
+    // Animate out
+    rotateEl.style.opacity   = '0';
+    rotateEl.style.transform = 'translateY(-16px)';
 
-    submitBtn.textContent = 'Enviando…';
-    submitBtn.disabled = true;
-
-    // Simulación de envío — reemplazar con fetch a Formspree cuando esté listo
     setTimeout(() => {
-      submitBtn.textContent = 'Mensaje Enviado ✓';
-      submitBtn.style.background = '#2d6e3a';
-      formNote.style.display = 'block';
-      formNote.textContent = '¡Gracias! Te contactaré pronto.';
-      contactForm.reset();
+      wordIndex = (wordIndex + 1) % rotateWords.length;
+      rotateEl.textContent = rotateWords[wordIndex];
 
-      setTimeout(() => {
-        submitBtn.textContent = 'Enviar Mensaje';
-        submitBtn.style.background = '';
-        submitBtn.disabled = false;
-        formNote.style.display = 'none';
-      }, 4000);
-    }, 1200);
-  });
+      // Snap to below, then animate in
+      rotateEl.style.transition = 'none';
+      rotateEl.style.transform  = 'translateY(16px)';
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          rotateEl.style.transition = '';
+          rotateEl.style.opacity    = '1';
+          rotateEl.style.transform  = 'translateY(0)';
+        });
+      });
+    }, 420);
+  }, 2600);
 }
+
+/* ════════════════════════════════════════
+   SERVICES CAROUSEL
+════════════════════════════════════════ */
+
+const slides    = document.querySelectorAll('.carousel-slide');
+const prevBtn   = document.querySelector('.carousel-prev');
+const nextBtn   = document.querySelector('.carousel-next');
+const indicator = document.querySelector('.carousel-indicator');
+let activeSlide = 0;
+
+function goToSlide(index) {
+  slides[activeSlide].classList.remove('active');
+  activeSlide = (index + slides.length) % slides.length;
+  slides[activeSlide].classList.add('active');
+  if (indicator) {
+    const n = slides.length;
+    indicator.textContent = `0${activeSlide + 1} / 0${n}`;
+  }
+}
+
+if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(activeSlide - 1));
+if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(activeSlide + 1));
